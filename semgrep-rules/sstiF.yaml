@@ -1,0 +1,6 @@
+rules:
+  - id: ssti-flexible
+    languages: [javascript]
+    message: "Potential SSTI: Template rendering with request data"
+    severity: ERROR
+    pattern: "res.render($PAGE, $DATA)" # rendering a page with data

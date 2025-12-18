@@ -1,0 +1,17 @@
+rules:
+  - id: flexible-ssrf-check
+    languages: [javascript]
+    message: "Potential SSRF: Server-side request is using a variable URL, which could be user-controlled."
+    severity: ERROR
+    pattern-either:
+      # axios library usage
+      - pattern: "axios.get($URL, ...)"
+      - pattern: "axios.post($URL, ...)"
+      - pattern: "axios($URL, ...)"
+      # request library usage
+      - pattern: "request($URL, ...)"
+      # node-fetch or modern fetch function
+      - pattern: "fetch($URL, ...)"
+      # native http/https libraries in Node.js
+      - pattern: "http.get($URL, ...)"
+      - pattern: "https.get($URL, ...)"

@@ -1,0 +1,13 @@
+rules:
+  - id: flexible-path-traversal
+    languages: [javascript]
+    message: "Potential Path Traversal: User input might control the file path in fs module."
+    severity: ERROR
+    pattern-either:
+      # file system access functions that take a path argument
+      - pattern: "fs.readFile($PATH, ...)"
+      - pattern: "fs.readFileSync($PATH, ...)"
+      - pattern: "fs.createReadStream($PATH, ...)"
+      # pattern: "fs.writeFile($PATH, ...)"
+      - pattern: "path.join(..., $VAR, ...)"
+      - pattern: "path.resolve(..., $VAR, ...)"

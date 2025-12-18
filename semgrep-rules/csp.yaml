@@ -1,0 +1,8 @@
+rules:
+  - id: missing-csp-header
+    languages: [javascript]
+    message: "Missing CSP Header: Your site is vulnerable to XSS and data injection."
+    severity: WARNING
+    patterns:
+      - pattern: "app.use(...)" # Middleware usage
+      - pattern-not-inside: "res.setHeader('Content-Security-Policy', ...)" # Check for CSP header setting

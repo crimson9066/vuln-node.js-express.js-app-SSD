@@ -1,0 +1,12 @@
+rules:
+  - id: flexible-xss-check
+    languages: [javascript]
+    message: "Potential XSS: User-controlled data is being rendered or sent directly."
+    severity: ERROR
+    patterns:
+      - pattern-either:
+          - pattern: "res.send($VAR)" # sending response directly
+          - pattern: "res.write($VAR)" # writing response directly
+          - pattern: "document.getElementById(...).innerHTML = $VAR" # direct DOM manipulation
+          - pattern: "element.innerHTML = $VAR" # direct DOM manipulation
+          - pattern: "window.location = $VAR" # potential open redirect

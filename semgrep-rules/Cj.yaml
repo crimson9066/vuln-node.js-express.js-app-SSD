@@ -1,0 +1,11 @@
+rules:
+  - id: clickjacking-missing-header
+    languages: [javascript]
+    message: "Security Header Missing: X-Frame-Options not found"
+    severity: WARNING
+    patterns:
+      - pattern: "app.use(...)"
+      - pattern-not-inside: "app.use(helmet())" # in case helmet is used
+      # Check for X-Frame-Options header
+      - pattern-not-inside: |
+          res.setHeader("X-Frame-Options", $VALUE)

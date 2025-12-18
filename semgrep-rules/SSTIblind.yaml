@@ -1,0 +1,7 @@
+rules:
+  - id: blind-ssti-check
+    languages: [javascript]
+    message: "Possible Blind SSTI: Data is being concatenated before rendering."
+    severity: ERROR
+    patterns:
+      - pattern: "$OBJ.render($ANY, { $KEY: $VAR + $INPUT })" # $INPUT is user input

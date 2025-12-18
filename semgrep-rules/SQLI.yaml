@@ -1,0 +1,12 @@
+rules:
+  - id: flexible-sqli-check
+    languages: [javascript]
+    message: "Potential SQL Injection: Variable detected inside raw SQL query function."
+    severity: ERROR
+    pattern-either:
+      # catch common database query functions that take raw queries
+      - pattern: "$DB.query($QUERY)"
+      - pattern: "$DB.execute($QUERY)"
+      # catch queries with string concatenation or template literals
+      - pattern: "$DB.query(... + $VAR + ...)"
+      - pattern: "$DB.query(`...${$VAR}...`)"

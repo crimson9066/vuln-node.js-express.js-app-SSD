@@ -1,0 +1,13 @@
+rules:
+  - id: flexible-command-injection
+    languages: [javascript]
+    message: "Critical: Command Injection detected. User input is being passed to a system shell."
+    severity: ERROR
+    pattern-either:
+      # Common ways to execute shell commands in Node.js
+      # Using child_process module
+      # Examples include exec, execSync, spawn, etc.
+      - pattern: "exec($CMD, ...)"
+      - pattern: "execSync($CMD, ...)"
+      - pattern: "spawn($CMD, ...)"
+      - pattern: "child_process.exec($CMD, ...)"

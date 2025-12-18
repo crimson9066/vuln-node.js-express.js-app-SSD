@@ -1,0 +1,13 @@
+rules:
+  - id: insecure-deserialization-check
+    languages: [javascript]
+    message: "Critical: Insecure Deserialization detected. Untrusted data being deserialized can lead to RCE."
+    severity: ERROR
+    pattern-either:
+      # using node-serialize library
+      - pattern: "require('node-serialize').unserialize($DATA)"
+      - pattern: "serialize.unserialize($DATA)"
+      # deserializing with serialize-to-js library
+      - pattern: "require('serialize-to-js').deserialize($DATA)"
+      # deserializing with eval (not recommended)
+      - pattern: "eval('(' + $DATA + ')')"
